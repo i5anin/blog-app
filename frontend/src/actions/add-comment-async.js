@@ -1,6 +1,7 @@
-import { setPostData } from './set-post-data';
+import {request} from "../utils/request"
+import {addComment} from "./add-comment"
 
-export const addCommentAsync = (requestServer, userId, postId, content) => (dispatch) =>
-	requestServer('addPostComment', userId, postId, content).then(({ res: postData }) => {
-		dispatch(setPostData(postData));
+export const addCommentAsync = (postId, content) => (dispatch) =>
+	request(`/api/posts/${postId}/comments`, 'POST', {content} ).then(({ comment}) => {
+		dispatch(addComment(comment.data));
 	});

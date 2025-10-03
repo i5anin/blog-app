@@ -1,7 +1,8 @@
-import { setPostData } from './set-post-data';
+import {request} from "../utils/request.js"
+import {removeComment} from "./remove-comment.js"
 
-export const removeCommentAsync = (requestServer, postId, id) => (dispatch) => {
-	requestServer('removePostComment', postId, id).then(({ res: postData }) => {
-		dispatch(setPostData(postData));
+export const removeCommentAsync = (postId, id) => (dispatch) => {
+	request(`/api/posts/${postId}/comments/${id}`,'DELETE', ).then(() => {
+		dispatch(removeComment(id));
 	});
 };
