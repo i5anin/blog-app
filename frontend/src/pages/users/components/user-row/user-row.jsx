@@ -1,9 +1,9 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { PROP_TYPE } from "../../../../constants/index.js";
-import { Icon } from "../../../../components/index.js";
-import { TableRow } from "../table-row/table-row.jsx";
-import { useServerRequest } from "../../../../hooks/index.js";
+import { PROP_TYPE } from "../../../../constants/index";
+import { Icon } from "../../../../components/index";
+import { TableRow } from "../table-row/table-row";
+import {request} from "../../../../utils/index"
 import styled from "styled-components";
 
 const UserRowContainer = ({
@@ -18,14 +18,12 @@ const UserRowContainer = ({
     const [initialRoleId, setInitialRoleId] = useState(userRoleId);
     const [selectedRoleId, setSelectedRoleId] = useState(userRoleId);
 
-    const requestServer = useServerRequest();
-
     const onRoleChange = ({ target }) => {
         setSelectedRoleId(Number(target.value));
     };
 
     const onRoleSave = (userId, newUserRoleId) => {
-        requestServer("updateUserRole", userId, newUserRoleId).then(() => {
+        request(`/api/users/${userId}`, 'PATCH', {roleId: newUserRoleId }).then(() => {
             setInitialRoleId(newUserRoleId);
         });
     };
@@ -36,7 +34,14 @@ const UserRowContainer = ({
         <div className={className}>
             <TableRow border={true}>
                 <div className="login-column">{login}</div>
-                <div className="registered-at-column">{registeredAt}</div>
+                <div className="registered-at-column">
+                    {registeredAt
+                        ? new Date(registeredAt).toLocaleString('ru-RU', {
+                            day: '2-digit', month: '2-digit', year: 'numeric',
+                            hour: '2-digit', minute: '2-digit'
+                        })
+                        : '—'}
+                </div>
                 <div className="role-column">
                     <select value={selectedRoleId} onChange={onRoleChange}>
                         {roles.map(({ id: roleId, name: roleName }) => (
@@ -65,6 +70,10 @@ const UserRowContainer = ({
 export const UserRow = styled(UserRowContainer)`
     display: flex;
     margin-top: 10px;
+
+    .role-column {
+        padding: 5px 5px 5px 0;
+    }
 
     & select {
         font-size: 16px;

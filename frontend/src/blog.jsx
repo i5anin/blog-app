@@ -36,12 +36,6 @@ export const Blog = () => {
 		dispatch(setUser(currentUserData));
 	}, [dispatch]);
 
-    useLayoutEffect(() => {
-        fetch('/api/posts',  { cache: "no-store" })
-        .then(res => res.json())
-        .then(console.log)
-    }, [])
-
 	return (
 		<AppColumn>
 			<Header />
