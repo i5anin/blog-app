@@ -7,7 +7,6 @@ import { sanitizeContent } from "./utils/index.js";
 import { useDispatch } from "react-redux";
 import { savePostAsync } from "../../../../actions/index.js";
 import { useNavigate } from "react-router-dom";
-import { useServerRequest } from "../../../../hooks/index.js";
 import styled from "styled-components";
 
 const PostFormContainer = ({
@@ -16,7 +15,6 @@ const PostFormContainer = ({
 }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const requestServer = useServerRequest();
 
     const [imageUrlValue, setImageUrlValue] = useState("");
     const [titleValue, setTitleValue] = useState("");
@@ -31,13 +29,12 @@ const PostFormContainer = ({
         const newContent = sanitizeContent(contentRef.current.innerHTML);
 
         const newPostData = {
-            id,
             imageUrl: imageUrlValue,
             title: titleValue,
             content: newContent,
         };
 
-        dispatch(savePostAsync(requestServer, newPostData)).then(({ id }) => {
+        dispatch(savePostAsync(id, newPostData)).then(({ id }) => {
             navigate(`/post/${id}`);
         });
     };
