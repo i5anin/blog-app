@@ -33,6 +33,8 @@ const PostFormContainer = ({
             title: titleValue,
             content: newContent,
         };
+        console.log('Post data:', { title, imageUrl, content });
+
 
         dispatch(savePostAsync(id, newPostData)).then(({ id }) => {
             navigate(`/post/${id}`);
