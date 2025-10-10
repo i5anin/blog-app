@@ -11,8 +11,6 @@ const PostContentContainer = ({
 
 }) => {
     const navigate = useNavigate();
-    console.log('imageUrl:', imageUrl);
-
 
     return (
         <div className={className}>
