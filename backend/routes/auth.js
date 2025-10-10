@@ -9,7 +9,7 @@ router.post('/register', async (req, res) => {
         const {user, token} = await register(req.body.login, req.body.password);
 
         res.cookie('token', token, {httpOnly: true})
-            .res.send({error: null, user: mapUser(user)});
+            res.send({error: null, user: mapUser(user)});
     } catch (e) {
         res.send({error: e.message || 'Unknown error'});
     }

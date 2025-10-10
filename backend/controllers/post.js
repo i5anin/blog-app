@@ -1,6 +1,5 @@
 const Post = require('../models/Post');
 
-// add
 async function addPost(post) {
     const newPost = await Post.create(post);
 
@@ -13,7 +12,6 @@ async function addPost(post) {
     a
 }
 
-// edit
 async function editPost(id, post) {
     const newPost = await Post.findByIdAndUpdate(id, post, {returnDocument: 'after'})
 
@@ -26,12 +24,10 @@ async function editPost(id, post) {
 
 }
 
-// delete
 function deletePost(id) {
     return Post.deleteOne({_id: id});
 }
 
-// get list with search and paginate
 async function getPosts(search = '', limit = 10, page = 1) {
     const [posts, count] = await Promise.all([
         Post.find({title: {$regex: search, $options: 'i'}})
@@ -44,7 +40,6 @@ async function getPosts(search = '', limit = 10, page = 1) {
     return {posts, lastPage: Math.ceil(count / limit)};
 }
 
-// get item
 function getPost(id) {
     return Post.findById(id).populate({
         path: 'comments',
