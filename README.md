@@ -1,5 +1,7 @@
 # 📖 Blogging application
 
+**ЦКП:** Публикация и чтение статей с регистрацией пользователей и обсуждением в комментариях; копия стороннего приложения.
+
 ## This project demonstrates the power of modern web development by combining React + Redux on the frontend with Express.js + MongoDB on the backend.
 
 ### ✨ Features
